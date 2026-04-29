@@ -27,9 +27,9 @@ steps:
       $(Build.BuildId)
 
 # Deploy to Azure Web App for Containers
-- task: AzureWebAppContainer@2
+- task: AzureWebApp@1
   displayName: Deploy to Azure Web App
   inputs:
     azureSubscription: 'azure-resource'      # ARM service connection
     appName: 'webapp-connection'             # your App Service name
-    containers: 'vyshnav123456789/vyshnav:$(Build.BuildId)'
+    imageName: 'vyshnav123456789/vyshnav:$(Build.BuildId)'
