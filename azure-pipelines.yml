@@ -1,22 +1,22 @@
 trigger:
-- master   # change to 'main' if your branch is main
+- master   # change if needed
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-# Build the Docker image
+# ✅ Step 1: Build Docker image
 - task: Docker@2
   displayName: Build Docker image
   inputs:
-    containerRegistry: 'docker-connection'   # Docker Hub service connection
-    repository: 'vyshnav123456789/vyshnav'   # your Docker Hub repo
+    containerRegistry: 'docker-connection'
+    repository: 'vyshnav123456789/vyshnav'
     command: 'build'
     Dockerfile: '**/Dockerfile'
     tags: |
       $(Build.BuildId)
 
-# Push the image to Docker Hub
+# ✅ Step 2: Push Docker image
 - task: Docker@2
   displayName: Push Docker image
   inputs:
@@ -26,4 +26,16 @@ steps:
     tags: |
       $(Build.BuildId)
 
+# ✅ ✅ Step 3: Create artifact file (IMPORTANT)
+- script: |
+    echo "IMAGE_NAME=vyshnav123456789/vyshnav:$(Build.BuildId)" > image.txt
+  displayName: Create image metadata
+
+# ✅ ✅ Step 4: Publish artifact
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: 'image.txt'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
