@@ -18,7 +18,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # ✅ IMPORTANT: update folder name if needed
-COPY --from=build /app/dist/RentACar-FrontEnd/browser /usr/share/nginx/html
+COPY --from=build /app/dist/RentACar-FrontEnd /usr/share/nginx/html
 
 EXPOSE 80
 
