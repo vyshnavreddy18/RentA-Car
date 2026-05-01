@@ -19,4 +19,5 @@ COPY --from=build /app/dist/RentACar-FrontEnd /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+ENV PORT 80
 CMD ["nginx", "-g", "daemon off;"]
